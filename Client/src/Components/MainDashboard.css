@@ -1,0 +1,118 @@
+/*  
+.admin-dashboard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+    min-height: calc(100vh - 100px); 
+}
+
+
+.admin-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 10px;
+    width: 200px;
+}
+
+.admin-card h3 {
+    margin-bottom: 15px;
+}
+
+.admin-card .admin-card-button {
+    padding: 10px 20px;
+    background-color: #2cbbc3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    outline: none;
+
+}
+
+   */
+
+
+/* Main Dashboard Styling */
+.admin-dashboard {
+    padding: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #229a9e;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Decreased the minimum card size */
+    gap: 20px;
+    padding: 10px;
+}
+
+.admin-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px; /* Reduced padding to make the cards smaller */
+    transition: box-shadow 0.3s ease;
+}
+
+.admin-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.admin-card h3 {
+    font-size: 18px; /* Slightly reduced font size */
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.admin-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #2cbbc3;
+    color: white;
+    border: none;
+    padding: 10px 12px; /* Reduced padding */
+    margin: 8px 0;
+    border-radius: 5px;
+    font-size: 14px; /* Slightly smaller font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.admin-button:hover {
+    background-color: #229a9e;
+}
+
+.admin-button svg {
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .admin-card {
+        padding: 10px; /* Reduced padding for smaller screens */
+    }
+    .admin-button {
+        font-size: 12px; /* Smaller font size on mobile */
+        padding: 8px 10px; /* Reduced padding on mobile */
+    }
+}

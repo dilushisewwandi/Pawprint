@@ -1,0 +1,95 @@
+/* Container */
+.track-requests-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 600px;
+    margin: 40px auto;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #1da7a1;
+    margin-bottom: 10px;
+  }
+  
+  .header-icon {
+    margin-right: 10px;
+  }
+  
+  /* Subtext */
+  .subtext {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  /* Table */
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .request-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .request-table th,
+  .request-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .request-table th {
+    background-color: #1da7a1;
+    color: white;
+  }
+  
+  .request-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Status Icons */
+  .status-icon {
+    font-size: 18px;
+  }
+  
+  .approved {
+    color: #28a745;
+  }
+  
+  .pending {
+    color: #ffc107;
+  }
+  
+  .rejected {
+    color: #dc3545;
+  }
+  
+  /* View Button */
+  .view-btn {
+    background-color: #1da7a1;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s;
+  }
+  
+  .view-btn:hover {
+    background-color: #168c85;
+  }
+  

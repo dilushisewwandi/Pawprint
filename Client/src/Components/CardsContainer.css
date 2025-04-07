@@ -1,0 +1,35 @@
+/* 
+@keyframes slideInRight {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  
+  .cards-container {
+    
+    display: flex;
+    justify-content: space-between; 
+}
+
+.card {
+    top: 100px;
+    left: 20px;
+    right: 20px;
+    width: 250px;
+    height: 55px;
+    flex: 0 0 auto; 
+    margin: 2px;
+    animation: slideInRight 1s ease forwards;
+}
+
+.col-md-2 {
+    flex: 1;
+    max-width: none; 
+}
+ */

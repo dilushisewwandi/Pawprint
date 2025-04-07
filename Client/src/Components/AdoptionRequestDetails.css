@@ -1,0 +1,74 @@
+.adoption-details-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 26px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .details-card {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .detail {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #444;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .detail:last-child {
+    border-bottom: none;
+  }
+  
+  .icon {
+    font-size: 22px;
+    color: #ff9800;
+    margin-right: 10px;
+  }
+  
+  .status {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .status.approved {
+    color: green;
+  }
+  
+  .status.pending {
+    color: orange;
+  }
+  
+  .status.rejected {
+    color: red;
+  }
+  
+  .loading,
+  .error {
+    font-size: 18px;
+    color: #ff4d4d;
+    text-align: center;
+    padding: 20px;
+  }
+  

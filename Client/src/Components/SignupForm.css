@@ -1,0 +1,184 @@
+/* SignupForm.css */
+.signup-container {
+  font-family: 'Arial', sans-serif;
+  background: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 1s ease-out;
+}
+
+/* Hero Section */
+.signup-hero {
+  text-align: center;
+  padding: 50px;
+}
+
+.signup-hero-content h1 {
+  font-size: 2.5rem;
+  color: #2cbbc3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.5s forwards;
+}
+
+.paw-icon {
+  color: #2cbbc3;
+  font-size: 2rem;
+}
+
+.signup-hero-content p {
+  font-size: 1.2rem;
+  color: #555;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 1s forwards;
+}
+
+.signup-btn {
+  background: #2cbbc3;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 1.5s forwards;
+}
+
+.signup-btn:hover {
+  background: #229a9e;
+}
+
+/* Signup Form */
+.signup-form-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 2s forwards;
+}
+
+.signup-card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(30px);
+  animation: slideUp 0.3s ease-out 2s forwards;
+  margin-bottom: 50px;
+  
+}
+
+.signup-card h2 {
+  margin-bottom: 20px;
+  color: #2cbbc3;
+}
+
+/* Input Fields */
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #f0f0f0;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+  width: 100%; /* Make the container full-width */
+}
+
+.input-icon {
+  color: #2cbbc3;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+input, select {
+  width: 100%; /* Ensure inputs and selects take up full width of the container */
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  outline: none;
+  padding: 5px;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+
+input:focus, select:focus {
+  border-bottom: 2px solid #2cbbc3;
+  box-shadow: 0px 0px 5px rgba(44, 188, 195, 0.6);
+}
+
+/* Submit Button */
+.submit-btn {
+  background: #2cbbc3;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #229a9e;
+  transform: scale(1.05);
+}
+
+/* Login Link */
+p {
+  margin-top: 10px;
+  color: #555;
+}
+
+p a {
+  color: #2cbbc3;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+      transform: translateY(30px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}

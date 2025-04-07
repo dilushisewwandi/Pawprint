@@ -1,0 +1,160 @@
+/* General Styles */
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif; /* Clean font */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Pet Profile Page */
+.pet-profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
+
+/* Pet Profile Container */
+.pet-profile-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.adopt-pet-image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Pet Details */
+.pet-details {
+  flex: 1;
+  padding: 20px;
+}
+
+.pet-details h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.pet-details p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+/* Distributor Details */
+.distributor-details {
+  flex: 1;
+  padding: 20px;
+}
+
+.distributor-details h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.distributor-details p {
+  margin: 5px 0;
+}
+
+/* Health Card Details */
+.health-card-details {
+  flex: 1;
+  padding: 20px;
+}
+
+.health-card-details h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.health-card-details p {
+  margin: 5px 0;
+}
+
+/* Adopter Form */
+.adopt-form-container {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.adopt-welcome-message {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #229a9e;
+}
+
+.adopt-registration-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.adopt-form-group {
+  margin-bottom: 15px;
+}
+
+.adopt-form-group label {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.adopt-form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.adopt-form-group input:focus {
+  border-color: #2cbbc3;
+  outline: none;
+}
+
+button.adopt-regi-submit {
+  padding: 15px;
+  background-color: #2cbbc3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button.adopt-regi-submit:hover {
+  background-color: #229a9e;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .pet-profile-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .adopt-form-container {
+      width: 100%;
+  }
+}

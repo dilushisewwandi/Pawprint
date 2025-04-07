@@ -1,0 +1,114 @@
+.find-daycare-bookings-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f8f9;
+    padding: 20px;
+}
+
+.find-daycare-bookings-card {
+    background: #ffffff;
+    width: 500px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.find-daycare-bookings-card h2 {
+    color: #2cbbc3;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.find-daycare-bookings-form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.find-daycare-bookings-form-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.find-daycare-bookings-form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid #2cbbc3;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.find-daycare-bookings-form-group input:focus {
+    border-color: #1a898f;
+}
+
+.find-daycare-bookings-button {
+    background-color: #2cbbc3;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.find-daycare-bookings-button:hover {
+    background-color: #1a898f;
+}
+
+.find-daycare-bookings-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.find-daycare-bookings-list {
+    margin-top: 20px;
+}
+
+.bookings-list {
+    margin-top: 10px;
+}
+
+.booking-card {
+    background: #ffffff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    border-left: 4px solid #2cbbc3;
+}
+
+.booking-card h4 {
+    color: #2cbbc3;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.booking-card p {
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+}
+
+.icon {
+    color: #2cbbc3;
+}
