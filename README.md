@@ -1,4 +1,5 @@
 
+
 # Pawprint Project
 
 ## Table of Contents
@@ -64,4 +65,7 @@ For questions, please contact:
 - Implement a mobile-responsive design.
 - Add more detailed pet profiles.
 - Integrate a messaging feature for communication between users.
+
+# Pawprint
+An Automated Web Platform for Pet Adoption and Petcare
 
