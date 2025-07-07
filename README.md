@@ -59,7 +59,7 @@ Pawprint is a comprehensive web-based application designed to meet the diverse n
 ## Contact
 For questions, please contact:
 - **Name**: Dilushika Sewwandi
-- **Email**: dilushi928@outlook.com
+- **Email**: dilushisewwandi89@gmail.com
 
 ## Future Enhancements
 - Implement a mobile-responsive design.
