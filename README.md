@@ -10,7 +10,7 @@ An Automated Web Platform for Pet Adoption and Petcare
 - [Postman Collection & API Testing](#postman-collection--api-testing)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
-- [Usage Overview](#usage-overview)
+- [Usage](#usage-overview)
 - [Future Enhancements](#future-enhancements)
 - [Contact](#contact)
 
@@ -25,59 +25,71 @@ An Automated Web Platform for Pet Adoption and Petcare
 ## Key Features (Role-Based Panels)
 
 ### Admin Panel
-- Manage all users: adopters, distributors, veterinarians, daycares
-- View, update, and delete pets
-- Monitor adoption, vet, and daycare workflows
-- Full system control via a centralized dashboard
+- View, update, and manage all user types: **adopters**, **distributors**, **veterinarians**, **daycares**, and **pets**
+- Full system control through centralized access
 
 ### Adopter Panel
 - Register as an adopter
-- View and search pet profiles
-- Send adoption requests
-- Track request statuses
+- Browse available pets
+- Send adoption requests and track request status
 
 ### Distributor Panel
 - Register and manage distributor profile
-- Add and update pet details
-- View and respond to adoption requests
-- Track vet and daycare bookings related to listed pets
+- Add new pets for adoption
+- Track adoption requests from adopters
+- Book daycare and vet services
+- Monitor pet-related vet and daycare bookings
 
 ### Vet Panel
-- Register as a veterinarian
-- View and manage appointment requests
-- Create and update pet health cards
-- Record vaccination and treatment history
+- Create and manage vet profiles
+- View and respond to appointment requests
+- Manage pet health cards and vaccination records
 
 ### Daycare Panel
-- Register daycare center
-- Track and manage daycare bookings
-- Accept or reject user requests
-- Maintain booking schedules
+- Manage daycare center profile
+- Track and respond to incoming daycare bookings
+- Accept or reject service requests
 
-### Authentication
-- Role-based login system
-- JWT-secured registration and login
-- Protected routes based on user roles
+### Secure Authentication
+- JWT-based secure login and registration
+- Role-based route protection for sensitive areas
 
 ---
 
 ## Postman Collection & API Testing
 
-The entire backend of the Pawprint application has been tested and validated using a structured Postman collection.
+Comprehensive API testing was done using **Postman**, with complete coverage of all backend endpoints.
 
-### API Test Coverage:
-- **All major modules tested**:
-  - Auth
-  - Admin
-  - Adopter
-  - Distributor
-  - Vet
-  - Daycare
-  - Pet
-  - Adoption & Bookings
-- **Test assertions included**:
-  - HTTP status code validation
-  - JSON structure and field validation
+### API Test Coverage
+- **All Modules Covered**: Auth, Admin, Adopter, Vet, Pet, Distributor, Daycare, Adoption & Bookings
+- **Folder-wise Structured Collection** for better clarity and organization
+- **Test Assertions Included**:
+  - Status code validation
+  - JSON response structure checks
+  - Field-level validation
+  - Flow testing (e.g., approve/reject adoption & booking requests)
 
+### Collection Location
+- Postman collection is available in:  
+  `postman-tests/Pawprint_API_Test_Collection.json`
+
+---
+
+## Technologies Used
+
+| Layer        | Tech Stack              |
+|--------------|--------------------------|
+| Frontend     | React, JavaScript, CSS   |
+| Backend      | Node.js, Express.js      |
+| Database     | MySQL                    |
+| Auth         | JSON Web Tokens (JWT)    |
+| API Testing  | Postman                  |
+| Env Config   | `.env` file              |
+
+---
+
+## Installation
+
+Clone the repository:
    ```bash
    git clone https://github.com/dilushisewwandi/Pawprint.git
