@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./PanelCard.css"; // Separate PanelCard styles
+import "./PanelCard.css"; 
 
 const PanelCard = ({ icon, title, description, onClick }) => {
   return (

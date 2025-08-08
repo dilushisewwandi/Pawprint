@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/register', registerDistributor);
 router.put('/update/:userID', updateDistributor); 
-router.delete('/delete/:userID', deleteDistributor); 
+router.post('/delete/:userID', deleteDistributor); 
 router.post('/approve', approveAdoptionRequest);
 router.post('/reject', rejectAdoptionRequest);
 router.get('/trackAppointmentRequests/:userID', trackVetAppointmentRequests);

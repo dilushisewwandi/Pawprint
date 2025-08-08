@@ -80,9 +80,11 @@ export const updateDaycare = (req, res) => {
     });
 };
 
+
 // Delete a daycare with userID and email validation
 export const deleteDaycare = (req, res) => {
-    const { userID, dcEmail } = req.body;  // Get userID and email from request body
+    const { dcEmail } = req.body;  // Get userID and email from request body
+    const { userID } = req.params;
 
     if (!userID || !dcEmail) {
         return res.status(400).json({ message: 'UserID and email are required' });
@@ -110,9 +112,11 @@ export const deleteDaycare = (req, res) => {
         });
     });
 };
+
+
 //book daycare
 export const bookDaycare = (req, res) => {
-    const { userID, name, phone, email, petName, petBreed, bookingDate, bookingTime, dcID } = req.body;
+    const { userID, username, phone, email, petName, petBreed, bookingDate, bookingTime, dcID } = req.body;
 
     // Fetch disID from the distributor table based on userID
     const findDistributorQuery = "SELECT disID FROM distributor WHERE userID = ?";
@@ -156,7 +160,7 @@ export const bookDaycare = (req, res) => {
 
                 // Insert booking data into daycare_booking table
                 const insertBookingQuery = `INSERT INTO daycare_booking (disID, dcID, petID, username, phone, email, bookingDate, bookingTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-                db.query(insertBookingQuery, [disID, dcID, petID, name, phone, email, bookingDate, bookingTime], (insertErr) => {
+                db.query(insertBookingQuery, [disID, dcID, petID, username, phone, email, bookingDate, bookingTime], (insertErr) => {
                     if (insertErr) {
                         console.error('Error inserting booking data:', insertErr);
                         return res.status(500).json({ message: 'Failed to insert booking data' });
@@ -169,36 +173,6 @@ export const bookDaycare = (req, res) => {
     });
 };
 
-// //find a daycare booking by userID
-// export const findDaycareBookingsByUserID = (req, res) => {
-//     const { userID } = req.params;
-
-//     const findBookingQuery = "SELECT dcID FROM daycare WHERE userID = ?";
-//     db.query(findBookingQuery, [userID], (bookingErr, bookingResults) => {
-//         if (bookingErr) {
-//             console.error('Error finding daycare:', bookingErr);
-//             return res.status(500).json({ message: 'Database query failed when finding daycare.' });
-//         }
-//         if (bookingResults.length === 0) {
-//             return res.status(404).json({ message: 'Daycare not found for this user.' });
-//         }
-
-//         const dcID = bookingResults[0].dcID;
-
-//         const findBookingQuery = "SELECT * FROM daycare_booking WHERE dcID = ?";
-//         db.query(findBookingQuery, [dcID], (bookingErr, bookingResults) => {
-//             if (bookingErr) {
-//                 console.error('Error finding bookings:', bookingErr);
-//                 return res.status(500).json({ message: 'Database query failed when finding bookings.' });
-//             }
-
-//             if (bookingResults.length === 0) {
-//                 return res.status(404).json({ message: 'No bookings found for this daycare.' });
-//             }
-//             res.status(200).json(bookingResults);
-//         });
-//     });
-// };
 
 export const findDaycareBookingsByUserID = (req, res) => {
     const { userID } = req.params;
@@ -217,21 +191,33 @@ export const findDaycareBookingsByUserID = (req, res) => {
         const dcID = bookingResults[0].dcID;
 
         // Find bookings and include pet name, breed, and age by joining the pets table
-        const findBookingQuery = `
-            SELECT 
+        // const findBookingQuery = `
+        //     SELECT 
+        //         db.bookingID,
+        //         db.bookingDate,
+        //         db.bookingTime,
+        //         p.petName,
+        //         p.petBreed,
+        //         p.petAge,
+        //         db.username,
+        //         db.phone,
+        //         db.email
+        //     FROM daycare_booking AS db
+        //     JOIN pet AS p ON db.petID = p.petID
+        //     JOIN user AS u ON db.disID = u.userID  -- Changed from db.userID to db.disID
+        //     WHERE db.dcID = ? AND db.status = 'Pending'`;
+
+        const findBookingQuery = `SELECT 
                 db.bookingID,
                 db.bookingDate,
                 db.bookingTime,
-                p.petName,
-                p.petBreed,
-                p.petAge,
                 db.username,
                 db.phone,
-                db.email
+                db.email,
+                db.petID
             FROM daycare_booking AS db
-            JOIN pet AS p ON db.petID = p.petID
-            JOIN user AS u ON db.disID = u.userID  -- Changed from db.userID to db.disID
-            WHERE db.dcID = ? AND db.status = 'Pending'`;
+            WHERE db.dcID = ? AND db.status = 'Pending';
+        `;
 
         db.query(findBookingQuery, [dcID], (bookingErr, bookingResults) => {
             if (bookingErr) {
@@ -247,6 +233,7 @@ export const findDaycareBookingsByUserID = (req, res) => {
         });
     });
 };
+
 
 //view daycare schedules by userID
 export const viewDaycareScheduleByUserID = (req, res) => {
@@ -279,6 +266,7 @@ export const viewDaycareScheduleByUserID = (req, res) => {
     });
 };
 
+
 //get all daycares
 export const getAllDaycare = (req, res) => {
     const q = "SELECT * FROM daycare";
@@ -292,29 +280,6 @@ export const getAllDaycare = (req, res) => {
     });
 };
 
-
-// export const approveBookingRequest = async (req, res) => {
-//     const { dcID } = req.body;
-    
-//     if (!dcID) {
-//         return res.status(400).json({ error: 'Daycare ID is required' });
-//     }
-    
-//     try {
-//         // Update pet status to 'adopted'
-//         //db.query("UPDATE pet SET status = 'Adopted' WHERE petID = ?", [petID]);
-
-//         db.query("UPDATE daycare_booking SET status = 'Approved' WHERE dcID = ?", [dcID]);
-        
-//         // Remove the request from adoption_requests table
-//         // db.query("DELETE FROM adoption_requests WHERE petID = ?", [petID]);
-        
-//         res.status(200).json({ message: 'Booking request approved successfully' });
-//     } catch (error) {
-//         console.error('Error approving booking request:', error);
-//         res.status(500).json({ error: 'Failed to approve booking request' });
-//     }
-// };
 
 // Approve a daycare booking
 export const approveBookingRequest = async (req, res) => {
@@ -338,6 +303,7 @@ export const approveBookingRequest = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
 
 // Reject a daycare booking
 export const rejectBookingRequest = async (req, res) => {

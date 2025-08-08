@@ -61,7 +61,7 @@ const AdminAddForms = () => {
             <h2>Add Distributor</h2>
             {renderForm('distributor', 'http://localhost:8800/api/distributorManage/add')}
 
-            {/* Add similar sections for update, delete, and find operations */}
+           
         </div>
     );
 };

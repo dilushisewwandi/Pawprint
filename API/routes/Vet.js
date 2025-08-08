@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/register',registerVet);
 router.put('/update/:userID', updateVet);
-router.delete('/delete/:userID', deleteVet);
+router.post('/delete/:userID', deleteVet);
 router.get('/vetProfiles', getAllVetProfiles);
 router.post('/vetAppointment', bookVetAppointment);
 router.get('/findVetAppointments/:userID',findVetAppointmentsByUserID);

@@ -23,6 +23,7 @@ export const registerAdopter = (req, res) => {
 export const updateAdopter = (req, res) => {
     const { adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone} = req.body;
     const { userID } = req.params;
+    // const userID = req.params.userID;
 
     console.log("Updating adopter with userID:", userID);
     console.log("New Data:", req.body);
@@ -60,6 +61,7 @@ export const updateAdopter = (req, res) => {
 
 //delete adopter
 export const deleteAdopter = (req, res) => {
+    // const { userID } = req.params;
     const { userID } = req.params;
     const { adoEmail } = req.body;
 
@@ -117,7 +119,7 @@ export const trackAdoptionRequests = (req, res) => {
         // Step 2: Fetch adoption requests using adoID
         const query = `
             SELECT 
-                ar.requestID, p.petID, p.petName, d.disName, d.disPhone, d.disEmail, p.status
+                ar.requestID, ar.status, p.petID, p.petName, d.disName, d.disPhone, d.disEmail
             FROM 
                 adoption_requests ar
             JOIN 
@@ -144,7 +146,6 @@ export const trackAdoptionRequests = (req, res) => {
         });
     });
 };
-
 
 // Get adoption request details by petID
 export const getAdoptionRequestDetails = (req, res) => {

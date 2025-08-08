@@ -282,7 +282,7 @@ export const findPetByAdoID = (req, res) => {
 export const findPetByDcID = (req, res) => {
     const dcID = req.params.dcID;
 
-    const q = "SELECT * FROM pet WHERE dcID = ?";
+    const q = "SELECT * FROM daycare_booking WHERE dcID = ?";
     db.query(q, [dcID], (err, data) => {
         if (err) {
             console.error("Error fetching pets by daycare ID:", err);

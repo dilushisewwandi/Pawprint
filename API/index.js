@@ -44,7 +44,6 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/distributorManage", distributorManageRoutes);
 app.use("/api/adopterManage", adopterManageRoutes);
-// app.use("/api/adopterRegi", adopterRegiRoutes);
 app.use("/api/daycareManage", daycareManageRoutes);
 app.use("/api/petManage", petManageRoutes);
 app.use("/api/vetManage", vetManageRoutes);
@@ -54,8 +53,6 @@ app.use("/api/adopter", adopterRoutes);
 app.use("/api/pet", petRoutes);
 app.use("/api/daycare", daycareRoutes);
 app.use("/api/healthcard", healthCardRoutes);
-// app.use("/api/trackAdoptionRequests", trackAdoption);
-
 
 
 // Start the server

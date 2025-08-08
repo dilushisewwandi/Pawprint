@@ -23,8 +23,7 @@ const router = express.Router();
 
 router.post('/register', upload.single('petImage'), registerPet);
 router.put('/update/:petID', upload.single('petImage'), updatePet);
-// router.put('/update/:petID', updatePet);
-router.delete('/delete', deletePet);
+router.post('/delete', deletePet);
 router.get('/distributor/:disID', getPetsByDistributor);
 router.get('/allpets', getAllPets);
 router.get('/petProfile/:petID', getPetProfile);

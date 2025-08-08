@@ -69,6 +69,7 @@ const HealthCardManagement = ({ formType }) => {
     //         alert(`An error occurred: ${error.response?.data?.message || error.message}`);
     //     }
     // };
+    
     const handleHealthCardSubmit = async (e) => {
         e.preventDefault();
     

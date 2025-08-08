@@ -1,7 +1,7 @@
 import { db } from "../Connect.js";
 
 export const addAdopter = (req, res) => {
-    const { userID, adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone, householdComposition, reasonForAdoption } = req.body;
+    const { userID, adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone } = req.body;
 
     console.log("Received data:", req.body);
 
@@ -26,8 +26,8 @@ export const addAdopter = (req, res) => {
         }
 
         //Proceed with adding the adopter (if userID exists or does not exist)
-        const q = "INSERT INTO adopter(`userID`, `adoName`, `adoNIC`, `adoAge`, `adoJob`, `adoGender`, `adoLocation`, `adoEmail`, `adoPhone`, `householdComposition`, `reasonForAdoption`) VALUES (?)";
-        const values = [userID, adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone, householdComposition, reasonForAdoption];
+        const q = "INSERT INTO adopter(`userID`, `adoName`, `adoNIC`, `adoAge`, `adoJob`, `adoGender`, `adoLocation`, `adoEmail`, `adoPhone`) VALUES (?)";
+        const values = [userID, adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone];
 
         db.query(q, [values], (err, data) => {
             if (err) {
@@ -74,7 +74,7 @@ export const deleteAdopter = (req, res) => {
 
 //update adopter
 export const updateAdopter = (req, res) => {
-    const { userID, adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone, householdComposition, reasonForAdoption } = req.body;
+    const { userID, adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone} = req.body;
     const adoID = req.params.id;
 
     // Validate phone number 
@@ -82,9 +82,9 @@ export const updateAdopter = (req, res) => {
         return res.status(400).json({ error: "Invalid phone number" });
     }
 
-    const q = `UPDATE adopter SET userID = ?, adoName = ?, adoNIC = ?, adoAge = ?, adoJob = ?, adoGender = ?, adoLocation = ?, adoEmail = ?, adoPhone = ?, householdComposition = ?, reasonForAdoption = ? WHERE adoID = ?`;
+    const q = `UPDATE adopter SET userID = ?, adoName = ?, adoNIC = ?, adoAge = ?, adoJob = ?, adoGender = ?, adoLocation = ?, adoEmail = ?, adoPhone = ? WHERE adoID = ?`;
 
-    db.query(q, [userID, adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone, householdComposition, reasonForAdoption, adoID], (err, data) => {
+    db.query(q, [userID, adoName, adoNIC, adoAge, adoJob, adoGender, adoLocation, adoEmail, adoPhone, adoID], (err, data) => {
         if (err) {
             console.error("Database query failed:", err);
             return res.status(500).json({ error: "Internal Server Error", details: err });
@@ -116,9 +116,6 @@ export const findAdopters = (req, res) => {
                 break;
             case 'adoLocation':
                 query = "SELECT * FROM adopter WHERE adoLocation = ?";
-                break;
-            case 'reasonForAdoption':
-                query = "SELECT * FROM adopter WHERE reasonForAdoption = ?";
                 break;
             default:
                 return res.status(400).json({ error: "Invalid search criteria" });

@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-//register vet
+//register a vet
 export const registerVet = (req, res) => {
     const {vetName,vetEmail,vetSpecialization,vetPhone,clinic,userID} = req.body;
 
@@ -95,6 +95,7 @@ export const updateVet = (req, res) => {
 };
 
 
+//Delete a vet
 export const deleteVet = (req, res) => {
     const { userID } = req.params;
     const { vetEmail } = req.body; // Extract from request body
@@ -144,81 +145,8 @@ export const getAllVetProfiles = (req, res) => {
     });
 };
 
-// //book vet appointments
-// export const bookVetAppointment = (req, res) => {
-//     const { appointmentDate, appointmentTime, vetID, petName, petAge, petBreed, reason, name, phone, email, userID } = req.body;
 
-//     // Validate userID and email
-//     const validateUserQuery = "SELECT * FROM user WHERE userID = ? AND email = ?";
-//     db.query(validateUserQuery, [userID, email], (userErr, userResults) => {
-//         if (userErr) {
-//             console.error('Error validating user:', userErr);
-//             return res.status(500).json({ message: 'Database query failed during user validation.' });
-//         }
-
-//         if (userResults.length === 0) {
-//             return res.status(401).json({ message: 'User not found or email mismatch.' });
-//         }
-
-//         // Find disID using the userID
-//         const findDistributorQuery = "SELECT disID FROM distributor WHERE userID = ?";
-//         db.query(findDistributorQuery, [userID], (distributorErr, distributorResults) => {
-//             if (distributorErr) {
-//                 console.error('Error finding distributor:', distributorErr);
-//                 return res.status(500).json({ message: 'Error finding distributor.' });
-//             }
-
-//             if (distributorResults.length === 0) {
-//                 return res.status(404).json({ message: 'Distributor not found for this user.' });
-//             }
-
-//             const disID = distributorResults[0].disID;
-
-//             // Find the pet using the provided details
-//             const findPetQuery = "SELECT petID FROM pet WHERE petName = ? AND disID = ? AND petBreed = ?";
-//             db.query(findPetQuery, [petName, disID, petBreed], (findErr, findResults) => {
-//                 if (findErr) {
-//                     console.error('Error finding pet:', findErr);
-//                     return res.status(500).json({ message: 'Error finding pet.' });
-//                 }
-
-//                 if (findResults.length === 0) {
-//                     return res.status(404).json({ message: 'Pet not found.' });
-//                 }
-
-//                 const petID = findResults[0].petID;
-
-//                 // Fetch vet details and proceed with booking
-//                 const query = "SELECT * FROM veterinarian WHERE vetID = ?";
-//                 db.query(query, [vetID], (vetErr, vetResults) => {
-//                     if (vetErr) {
-//                         console.error('Database query error:', vetErr);
-//                         return res.status(500).json({ message: 'Database query failed when fetching veterinarian.' });
-//                     }
-
-//                     if (vetResults.length === 0) {
-//                         return res.status(404).json({ message: 'Doctor not found.' });
-//                     }
-
-//                     // Insert appointment into vet_appointment table
-//                     const insertQuery = `INSERT INTO vet_appointment (appointmentDate, appointmentTime, vetID, disID, petID, petName, petAge, reason, name, phone, email)
-//                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-//                     db.query(insertQuery, [appointmentDate, appointmentTime, vetID, disID, petID, petName, petAge, reason, name, phone, email], (insertErr) => {
-//                         if (insertErr) {
-//                             console.error('Error inserting appointment:', insertErr);
-//                             return res.status(500).json({ message: 'Error inserting appointment.' });
-//                         }
-
-//                         res.status(200).json({ message: 'Appointment booked successfully.' });
-//                     });
-//                 });
-//             });
-//         });
-//     });
-// };
-
-
+//Book vet appointment
 export const bookVetAppointment = (req, res) => {
     const { userID, name, phone, email, petName, petBreed, appointmentDate, appointmentTime, vetID, reason, petAge } = req.body;
 
@@ -263,8 +191,8 @@ export const bookVetAppointment = (req, res) => {
                 const petID = findResults[0].petID;
 
                 // Insert appointment data into vet_appointment table
-                const insertAppointmentQuery = `INSERT INTO vet_appointment (disID, vetID, petID, petName, name, phone, email, appointmentDate, appointmentTime, reason, petAge) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-                db.query(insertAppointmentQuery, [disID, vetID, petID, petName, name, phone, email, appointmentDate, appointmentTime, reason, petAge], (insertErr) => {
+                const insertAppointmentQuery = `INSERT INTO vet_appointment (disID, vetID, petID, petName, petBreed, name, phone, email, appointmentDate, appointmentTime, reason, petAge) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                db.query(insertAppointmentQuery, [disID, vetID, petID, petName, petBreed, name, phone, email, appointmentDate, appointmentTime, reason, petAge], (insertErr) => {
                     if (insertErr) {
                         console.error('Error inserting appointment data:', insertErr);
                         return res.status(500).json({ message: 'Failed to insert appointment data' });
@@ -312,6 +240,7 @@ export const findVetAppointmentsByUserID = (req, res) => {
         });
     });
 };
+
 
 // Approve a vet appointment
 export const approveAppointmentRequest = async (req, res) => {

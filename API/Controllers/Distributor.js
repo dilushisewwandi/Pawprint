@@ -96,7 +96,9 @@ export const updateDistributor = (req, res) => {
 
 // Delete distributor using userID and email
 export const deleteDistributor = (req, res) => {
-    const { userID, email } = req.body; // Get userID and email from request body
+    const userID = req.params.userID;
+    // const { email,userID } = req.body;  if you want to get both from request body
+    const { email } = req.body; // Get userID and email from request body
 
     console.log("Received delete request for:", { userID, email });
 
@@ -131,28 +133,7 @@ export const deleteDistributor = (req, res) => {
 };
 
 
-
-// export const approveAdoptionRequest = async (req, res) => {
-//     const { petID } = req.body;
-    
-//     if (!petID) {
-//         return res.status(400).json({ error: 'Pet ID is required' });
-//     }
-    
-//     try {
-//         // Update pet status to 'adopted'
-//         db.query("UPDATE pet SET status = 'Adopted' WHERE petID = ?", [petID]);
-
-//         db.query("UPDATE adoption_requests SET status = 'Approved' WHERE petID = ?", [petID]);
-        
-//         res.status(200).json({ message: 'Adoption request approved successfully' });
-        
-//     } catch (error) {
-//         console.error('Error approving adoption request:', error);
-//         res.status(500).json({ error: 'Failed to approve adoption request' });
-//     }
-// };
-
+//Approve Adoption Requests
 export const approveAdoptionRequest = async (req, res) => {
     const { petID } = req.body;
 
@@ -200,6 +181,8 @@ export const approveAdoptionRequest = async (req, res) => {
 };
 
 
+
+//Reject Adoption Requests
 export const rejectAdoptionRequest = async (req, res) => {
     const { petID } = req.body;
     
@@ -224,6 +207,8 @@ export const rejectAdoptionRequest = async (req, res) => {
     }
 };
 
+
+//Track Vet Appointment Requests Status
 export const trackVetAppointmentRequests = (req, res) => {
     const { userID } = req.params;
 
@@ -277,6 +262,9 @@ export const trackVetAppointmentRequests = (req, res) => {
     });
 };
 
+
+
+//Track Daycare Booking Requests Status
 export const trackDaycareBookingRequests = (req, res) => {
     const { userID } = req.params;
 
@@ -368,6 +356,7 @@ export const getDaycareBookingRequestDetails = (req, res) => {
     });
 };
 
+
 // Get vet appointment request details by appointmentID
 export const getVetAppointmentRequestDetails = (req, res) => {
     const { appointmentID } = req.params; // Extract appointmentID from request parameters
@@ -405,6 +394,7 @@ export const getVetAppointmentRequestDetails = (req, res) => {
 };
 
 
+//Track pets by user
 export const trackPetsByUser = (req, res) => {
     const { userID } = req.params;
 

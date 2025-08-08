@@ -9,7 +9,6 @@ const NavigationBar = () => {
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><HashLink to="/#about">About</HashLink></li>
-        {/* <li><Link to="/adopt">Adopt</Link></li> */}
         <li><HashLink to="/#service">Services</HashLink></li>
         <li><HashLink to="/#contact">Contact</HashLink></li>
         <li><Link to="/signup">Login</Link></li>

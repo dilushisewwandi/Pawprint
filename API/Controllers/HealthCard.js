@@ -1,56 +1,5 @@
 import { db } from "../Connect.js";
 
-//add healthcard
-// export const addHealthCard = (req, res) => {
-//     const { vetUserID, petID, healthIssues, lastCheckupDate, vName, vDate, vDose, vStatus, dueDateForNext } = req.body;
-
-//     //Insert into the healthcard table (no vetID here)
-//     const healthCardQuery = `INSERT INTO healthcard (petID, healthIssues, lastCheckupDate) VALUES (?, ?, ?);`;
-
-//     db.query(healthCardQuery, [petID, healthIssues, lastCheckupDate], (err, healthCardResult) => {
-//         if (err) {
-//             console.error('Error inserting health card:', err);
-//             return res.status(500).json({ error: 'Internal Server Error' });
-//         }
-
-//         const healthCardID = healthCardResult.insertId; // Get the newly inserted health card ID
-
-//     //Insert the vetID and healthCardID into the healthcard_veterinarian table
-//     const vetCardQuery = `INSERT INTO healthcard_veterinarian (cardID, vetID) VALUES (?, (SELECT vetID FROM veterinarian WHERE userID = ?));`;
-
-//     db.query(vetCardQuery, [healthCardID, vetUserID], (err) => {
-//         if (err) {
-//             console.error('Error linking vet to health card:', err);
-//             return res.status(500).json({ error: 'Internal Server Error' });
-//         }
-
-//     //Insert into the vaccine table
-//     const vaccineQuery = `INSERT INTO vaccine (vName, vDate, vDose, vStatus, dueDateForNext) VALUES (?, ?, ?, ?, ?);`;
-
-//     db.query(vaccineQuery, [vName, vDate, vDose, vStatus, dueDateForNext], (err, vaccineResult) => {
-//         if (err) {
-//             console.error('Error inserting vaccine:', err);
-//             return res.status(500).json({ error: 'Internal Server Error' });
-//         }
-
-//         const vaccineID = vaccineResult.insertId; // Get the newly inserted vaccine ID
-
-//         //Link the health card and vaccine in the healthcard_vaccine table
-//         const linkQuery = `INSERT INTO healthcard_vaccine (cardID, vID) VALUES (?, ?);`;
-
-//         db.query(linkQuery, [healthCardID, vaccineID], (err) => {
-//             if (err) {
-//                 console.error('Error linking health card and vaccine:', err);
-//                 return res.status(500).json({ error: 'Internal Server Error' });
-//             }
-
-//             res.status(200).json({ message: 'Health card and vaccine added successfully!' });
-//             });
-//         });
-//     }); 
-// });
-// };
-
 //Add healthcard
 export const addHealthCard = (req, res) => {
     const { vetUserID, petID, healthIssues, lastCheckupDate, vName, vDate, vDose, vStatus, dueDateForNext } = req.body;
@@ -140,56 +89,6 @@ export const getHealthProfile = (req, res) => {
     });
 };
 
-// //update health card
-// export const updateHealthCard = (req, res) => {
-//     const { cardID } = req.params;
-//     const { vetUserID, petID, healthIssues, lastCheckupDate, vName, vDate, vDose, vStatus, dueDateForNext } = req.body;
-
-//     //Fetch the vetID based on vetUserID
-//     const fetchVetIDQuery = "SELECT vetID FROM veterinarian WHERE userID = ?";
-
-//     db.query(fetchVetIDQuery, [vetUserID], (err, vetResults) => {
-//         if (err) {
-//             console.error("Failed to fetch vetID:", err);
-//             return res.status(500).json({ error: "Internal Server Error", details: err });
-//         }
-//         if (vetResults.length === 0) {
-//             return res.status(404).json({ error: "Veterinarian not found" });
-//         }
-
-//         const vetID = vetResults[0].vetID;
-
-//         //Update the healthcard_veterinarian table to link the vet to the health card
-//         const updateVetCardQuery = `UPDATE healthcard_veterinarian SET vetID = ? WHERE cardID = ?;`;
-
-//         db.query(updateVetCardQuery, [vetID, cardID], (err) => {
-//             if (err) {
-//                 console.error("Failed to update vet for health card:", err);
-//                 return res.status(500).json({ error: "Internal Server Error", details: err });
-//             }
-
-//             const updateVaccineQuery = `UPDATE vaccine SET vName = ?, vDate = ?, vDose = ?, vStatus = ?, dueDateForNext = ? WHERE vID = (SELECT vID FROM healthcard_vaccine WHERE cardID = ? );`;
-
-//             db.query(updateVaccineQuery, [vName, vDate, vDose, vStatus, dueDateForNext, cardID], (err) => {
-//                 if (err) {
-//                     console.error("Failed to update vaccine details:", err);
-//                     return res.status(500).json({ error: "Internal Server Error", details: err });
-//                 }
-
-//                 //Update the health card details
-//                 const updateHealthCardQuery = `UPDATE healthcard SET petID = ?, healthIssues = ?, lastCheckupDate = ?WHERE cardID = ?;`;
-
-//                 db.query(updateHealthCardQuery, [petID, healthIssues, lastCheckupDate, cardID], (err) => {
-//                     if (err) {
-//                         console.error("Failed to update health card:", err);
-//                         return res.status(500).json({ error: "Internal Server Error", details: err });
-//                     }
-//                     return res.status(200).json({ message: "Health card has been updated successfully." });
-//                 });
-//             });
-//         });
-//     });
-// };
 
 //Update healthcard
 export const updateHealthCard = (req, res) => {
@@ -293,6 +192,7 @@ export const deleteHealthCard = (req, res) => {
         });
     });
 };
+
 
 //get all health cards
 export const getAllHealthCard = (req, res) => {

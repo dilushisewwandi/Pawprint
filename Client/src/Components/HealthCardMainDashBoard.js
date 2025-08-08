@@ -16,10 +16,6 @@ function HealthCardMainDashBoard(){
       
     
       <HealthCardDashBoard />
-      {/* <HeroSection/> */}
-      {/* <CardsContainer/> */}
-      
-      {/* </div> */}
       
     </div>
     
