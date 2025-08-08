@@ -10,7 +10,7 @@ An Automated Web Platform for Pet Adoption and Petcare
 - [🧪 Postman Collection & API Testing](#postman-collection--api-testing)
 - [🛠️ Technologies Used](#technologies-used)
 - [🚀 Installation](#installation)
-- [👩‍💻 Usage](#usage)
+- [👩‍💻 Usage](#usage-overview)
 - [📈 Future Enhancements](#future-enhancements)
 - [📬 Contact](#contact)
 
