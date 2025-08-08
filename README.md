@@ -1,71 +1,95 @@
+# 🐾 Pawprint – Pet Adoption and Management Application
 
-
-# Pawprint Project
-
-## Table of Contents
-- [Description](#description)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Usage](#usage)
-- [Installation](#installation)
-- [Contact](#contact)
-
-## Description
-Pawprint is a comprehensive web-based application designed to meet the diverse needs of dog owners(distributors), adopters, daycares, and veterinarians. The app facilitates dog adoption, daycare bookings, and veterinary appointments, providing users with an intuitive and responsive interface to manage and track all aspects of pet care seamlessly. With a modern tech stack, Pawprint brings together various services in one place, ensuring a streamlined experience for users as they navigate the essential services needed for their furry companions.
-
-## Features
-- **Pet Adoption:** Browse, and adopt pets. Distributors and adopters can communicate adoption requests through the platform.
-- **Daycare Management:** Users can book daycares.
-- **Vet Appointment Management:** Schedule vet appointments and manage pet health records, vaccination details, and more.
-- **User Roles:** Separate user roles for Admin, Distributor, Adopter, Daycare and Veterinarian, each with tailored functionality.
-- **Secure Login and Registration:** JWT-based authentication to ensure secure access.
-
-## Technologies Used
-- **Frontend:** React, HTML, CSS
-- **Backend:** Node.js, Express.js
-- **Authentication:** JWT (JSON Web Tokens)
-- **Database:** MySQL
-- **Environment Variables:** Managed through `.env` file for security.
-
-## Usage
-
-### Admin Panel
-- **Purpose:** Manage user accounts, monitor adoption requests, and oversee daycare and vet services.
-- **Features:**
-  - Add, update, find, and delete users.
-  - Monitor overall system activity.
-
-### Distributor Panel
-- **Purpose:** Register pets for adoption and manage communication with adopters.
-- **Features:**
-  - Create user accounts.
-  - Register new pets for adoption.
-  - Check adoption requests.
-
-### Vet Panel
-- **Purpose:** Manage pet health records and appointment schedules.
-- **Features:**
-  - Create vet profiles.
-  - View and manage vet appointments.
-  - Manage health card details with updating medical histories, vaccination details, and notes.
-
-### Daycare Panel
-- **Purpose:** Manage daycare services and track daycare bookings.
-- **Features:**
-  - Create daycare accounts.
-  - Track shedules and bookings.
-  - Monitor pet activities while in care.
-
-## Contact
-For questions, please contact:
-- **Name**: Dilushika Sewwandi
-- **Email**: dilushisewwandi89@gmail.com
-
-## Future Enhancements
-- Implement a mobile-responsive design.
-- Add more detailed pet profiles.
-- Integrate a messaging feature for communication between users.
-
-# Pawprint
 An Automated Web Platform for Pet Adoption and Petcare
 
+---
+
+## 📚 Table of Contents
+- [📌 Description](#description)
+- [🔑 Key Features (Role-Based Panels)](#key-features-role-based-panels)
+- [🧪 Postman Collection & API Testing](#postman-collection--api-testing)
+- [🛠️ Technologies Used](#technologies-used)
+- [🚀 Installation](#installation)
+- [👩‍💻 Usage](#usage)
+- [📈 Future Enhancements](#future-enhancements)
+- [📬 Contact](#contact)
+
+---
+
+## 📌 Description
+
+**Pawprint** is a comprehensive full-stack web application built to connect pet adopters, distributors, daycares, and veterinarians on a centralized platform. It allows users to adopt pets, manage daycare bookings, handle veterinary appointments, and access health records. With role-based access and a modern tech stack, Pawprint offers a responsive and intuitive user experience.
+
+---
+
+## 🔑 Key Features (Role-Based Panels)
+
+### 🛠️ Admin Panel
+- View, update, and manage all user types: **adopters**, **distributors**, **veterinarians**, **daycares**, and **pets**
+- Full system control through centralized access
+
+### 🐾 Adopter Panel
+- Register as an adopter
+- Browse available pets
+- Send adoption requests and track request status
+
+### 📦 Distributor Panel
+- Register and manage distributor profile
+- Add new pets for adoption
+- Track adoption requests from adopters
+- Book daycare and vet services
+- Monitor pet-related vet and daycare bookings
+
+### 👨‍⚕️ Vet Panel
+- Create and manage vet profiles
+- View and respond to appointment requests
+- Manage pet health cards and vaccination records
+
+### 🏠 Daycare Panel
+- Manage daycare center profile
+- Track and respond to incoming daycare bookings
+- Accept or reject service requests
+
+### 🔐 Secure Authentication
+- JWT-based secure login and registration
+- Role-based route protection for sensitive areas
+
+---
+
+## 🧪 Postman Collection & API Testing
+
+Comprehensive API testing was done using **Postman**, with complete coverage of all backend endpoints.
+
+### 🔍 API Test Coverage
+- **All Modules Covered**: Auth, Admin, Adopter, Vet, Pet, Distributor, Daycare, Adoption & Bookings
+- **Folder-wise Structured Collection** for better clarity and organization
+- **Test Assertions Included**:
+  - Status code validation
+  - JSON response structure checks
+  - Field-level validation
+  - Flow testing (e.g., approve/reject adoption & booking requests)
+
+### 📂 Collection Location
+- Postman collection is available in:  
+  `postman-tests/Pawprint_API_Test_Collection.json`
+
+---
+
+## 🛠️ Technologies Used
+
+| Layer        | Tech Stack              |
+|--------------|--------------------------|
+| Frontend     | React, JavaScript, CSS   |
+| Backend      | Node.js, Express.js      |
+| Database     | MySQL                    |
+| Auth         | JSON Web Tokens (JWT)    |
+| API Testing  | Postman                  |
+| Env Config   | `.env` file              |
+
+---
+
+## 🚀 Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/dilushisewwandi/Pawprint.git

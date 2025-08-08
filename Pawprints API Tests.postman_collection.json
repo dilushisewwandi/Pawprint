@@ -1,0 +1,4164 @@
+{
+	"info": {
+		"_postman_id": "51ba101f-d385-4b94-8b92-7db8a524df18",
+		"name": "Pawprints API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27400570"
+	},
+	"item": [
+		{
+			"name": "Auth - Login & Register",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let res = pm.response.json();\r",
+									"console.log(\"userId from response:\", res.userId); // for debugging\r",
+									"pm.environment.set(\"userID\", res.userId);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"Testuser18\",\r\n    \"email\": \"testuser18@gmail.com\",\r\n    \"password\":\"testuser18123\",\r\n    \"role\":\"Daycare\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let res = pm.response.json();",
+									"pm.environment.set(\"authToken\", res.token);",
+									"pm.environment.set(\"userID\", res.userId);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userID\": {{userID}},\r\n  \"password\": \"testuser15123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This folder includes user authentication APIs. It provides endpoints for:\n\nRegistering new users with role selection (Admin, Adopter, Distributor, Veterinarian, and Daycare).\n\nLogging in with credentials to receive an authentication token.\n\nThese endpoints are foundational for secure access and token-based authentication throughout the system. Used as part of all login-protected actions across the app."
+		},
+		{
+			"name": "Adoption & Bookings",
+			"item": [
+				{
+					"name": "Adopt a Pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"try {\r",
+									"    const res = pm.response.json();\r",
+									"    pm.test(\"Response is a valid JSON object\", function () {\r",
+									"        pm.expect(res).to.be.an(\"object\");\r",
+									"    });\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is not a valid JSON\", function () {\r",
+									"        pm.expect.fail(\"Response is not JSON\");\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"petID\": 48,\n    \"userID\": {{userID}},\n    \"adoptionDate\": \"2025-08-06\",\n    \"adoptionTime\": \"10:00:00\",\n    \"reasonForAdoption\": \"I love dogs\",\n    \"adoName\": \"testuser32\",\n    \"adoEmail\": \"testuser32@gmail.com\"\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/pet/adopt/:petID",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pet",
+								"adopt",
+								":petID"
+							],
+							"variable": [
+								{
+									"key": "petID",
+									"value": "46"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vet Appointment Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"try {\r",
+									"    const res = pm.response.json();\r",
+									"    pm.test(\"Response is a valid JSON object\", function () {\r",
+									"        pm.expect(res).to.be.an(\"object\");\r",
+									"    });\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is not a valid JSON\", function () {\r",
+									"        pm.expect.fail(\"Response is not JSON\");\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"appointmentDate\": \"2025-08-05\",\n    \"appointmentTime\": \"14:00:00\",\n    \"vetID\": 24,\n    \"userID\":{{userID}},\n    \"petID\": 44,\n    \"petName\": \"Buddy2\",\n    \"petBreed\":\"Labrador\",\n    \"petAge\": 3,\n    \"reason\": \"Rash\",\n    \"name\":\"Testuser14\",\n    \"phone\": \"12345\",\n    \"email\": \"testuser14@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/vet/vetAppointment",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"vet",
+								"vetAppointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Daycare Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"try {\r",
+									"    const res = pm.response.json();\r",
+									"    pm.test(\"Response is a valid JSON object\", function () {\r",
+									"        pm.expect(res).to.be.an(\"object\");\r",
+									"    });\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is not a valid JSON\", function () {\r",
+									"        pm.expect.fail(\"Response is not JSON\");\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userID\":{{userID}},\n    \"dcID\": 30,\n    \"petName\": \"Buddy2\",\n    \"petBreed\": \"Labrador\",\n    \"username\": \"Testuser14\",\n    \"phone\": \"12345\",\n    \"email\": \"testuser14@gmail.com\",\n    \"bookingDate\": \"2025-08-05 T00:00:00Z\",\n    \"bookingTime\": \"09:00:00\",\n    \"status\": \"Pending\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/daycare/book",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"daycare",
+								"book"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This folder includes user-facing booking endpoints that allow:\n\nSending adoption requests for pets.\n\nBooking veterinary appointments.\n\nMaking daycare bookings.\n\nEach adoption request is initiated by the adopter and recorded with a Pending status. The request will then be handled by the respective user(Distributor).\n\nEach vet and daycare booking is initiated by the distributor and recorded with a Pending status. The request will then be handled by the respective user(Vet, Daycare).\n\nThese APIs support testing of request submission flows and validation handling."
+		},
+		{
+			"name": "Admin Panel",
+			"item": [
+				{
+					"name": "Adopter Manage",
+					"item": [
+						{
+							"name": "Add a adopter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\":\"26\",\r\n    \"adoID\": \"233\",\r\n    \"adoName\": \"Adopter1\",\r\n    \"adoNIC\": \"1234\",\r\n    \"adoAge\": \"21\",\r\n    \"adoJob\": \"asd\",\r\n    \"adoGender\": \"Male\",\r\n    \"adoLocation\": \"AdoLocation1\",\r\n    \"adoEmail\": \"adopter1@gmail.com\",\r\n    \"adoPhone\": \"123456789\",\r\n    \"householdComposition\": \"Single\",\r\n    \"reasonForAdoption\": \"Companionship\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/adopterManage/add",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"adopterManage",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a adopter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\":26,\r\n    \"adoName\": \"Adopter1\",\r\n    \"adoNIC\": \"1234\",\r\n    \"adoAge\": \"21\",\r\n    \"adoJob\": \"asd\",\r\n    \"adoGender\": \"Female\",\r\n    \"adoLocation\": \"AdoLocation1\",\r\n    \"adoEmail\": \"adopter1@gmail.com\",\r\n    \"adoPhone\": \"123456789\",\r\n    \"householdComposition\": \"Single\",\r\n    \"reasonForAdoption\": \"Companionship\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/adopterManage/update/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"adopterManage",
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "233"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a adopter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/adopterManage/find/:searchBy/:searchValue?",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"adopterManage",
+										"find",
+										":searchBy",
+										":searchValue"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									],
+									"variable": [
+										{
+											"key": "searchBy",
+											"value": "adoLocation"
+										},
+										{
+											"key": "searchValue",
+											"value": "Ratnapura"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a adopter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/adopterManage/delete/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"adopterManage",
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "226"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Distributor Manage",
+					"item": [
+						{
+							"name": "Add a distributor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{       \r\n    \"disID\": 46,\r\n    \"userID\": 27,\r\n    \"disName\": \"Distributor1\",\r\n    \"disLocation\": \"DisLocation1\",\r\n    \"disPhone\": \"0987654\",\r\n    \"disEmail\": \"distributor1@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/distributorManage/add",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributorManage",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a distributor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{       \r\n    \"userID\": 27,\r\n    \"disName\": \"Distributor1\",\r\n    \"disLocation\": \"DisLocation1\",\r\n    \"disPhone\": \"12345\",\r\n    \"disEmail\": \"distributor1@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/distributorManage/update/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributorManage",
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "46"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a distributor by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/distributorManage/findById/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributorManage",
+										"findById",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "46"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a distributor by location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/distributorManage/findByLocation/:location",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributorManage",
+										"findByLocation",
+										":location"
+									],
+									"variable": [
+										{
+											"key": "location",
+											"value": "DisLocation1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all distributors",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/distributorManage/findAll",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributorManage",
+										"findAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a distributor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/distributorManage/delete/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributorManage",
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pet Manage",
+					"item": [
+						{
+							"name": "Add a pet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"petID\": 47,\r\n    \"userID\": 27,\r\n    \"adoID\": null,\r\n    \"disID\": 46,\r\n    \"dcID\":null,\r\n    \"petName\": \"Teddy\",\r\n    \"petAge\": 1,\r\n    \"petHeight\": 20.5,\r\n    \"petWeight\": 3.5,\r\n    \"petGender\": \"Male\",\r\n    \"petSkinColor\": \"Black\",\r\n    \"petBreed\": \"German Shephard\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/petManage/add",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a pet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n    \"userID\": 27,\r\n    \"adoID\": null,\r\n    \"disID\": 46,\r\n    \"dcID\":null,\r\n    \"petName\": \"Teddy\",\r\n    \"petAge\": 1,\r\n    \"petHeight\": 20.5,\r\n    \"petWeight\": 4,\r\n    \"petGender\": \"Male\",\r\n    \"petSkinColor\": \"Black\",\r\n    \"petBreed\": \"German Shephard\",\r\n    \"petImage\":\"null\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/petManage/update/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "47"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a pet by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findById/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findById",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "47"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a pet by color",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findByColor/:color",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findByColor",
+										":color"
+									],
+									"variable": [
+										{
+											"key": "color",
+											"value": "black"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a pet by breed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findByBreed/:breed",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findByBreed",
+										":breed"
+									],
+									"variable": [
+										{
+											"key": "breed",
+											"value": "German shephard"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a pet by age",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findByAge/:age",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findByAge",
+										":age"
+									],
+									"variable": [
+										{
+											"key": "age",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a pet by gender",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findByGender/:gender",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findByGender",
+										":gender"
+									],
+									"variable": [
+										{
+											"key": "gender",
+											"value": "female"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a pet by disID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findByDisID/:disID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findByDisID",
+										":disID"
+									],
+									"variable": [
+										{
+											"key": "disID",
+											"value": "46"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a pet by adoID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findByAdoID/:adoID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findByAdoID",
+										":adoID"
+									],
+									"variable": [
+										{
+											"key": "adoID",
+											"value": "195"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a pet by dcID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findByDcID/:dcID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findByDcID",
+										":dcID"
+									],
+									"variable": [
+										{
+											"key": "dcID",
+											"value": "27"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all pets",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/findAll",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"findAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a pet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/petManage/delete/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"petManage",
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "29"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vet Manage",
+					"item": [
+						{
+							"name": "Add a vet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"vetID\": 26,\r\n        \"vetName\": \"Vet1\",\r\n        \"vetEmail\": \"vet1@gmail.com\",\r\n        \"vetSpecialization\": \"adbnn\",\r\n        \"vetPhone\": \"1234577\",\r\n        \"clinic\": \"Matara\",\r\n        \"userID\": 28\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/vetManage/add",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vetManage",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a vet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n       \r\n        \"vetName\": \"Vet1\",\r\n        \"vetEmail\": \"vet1@gmail.com\",\r\n        \"vetSpecialization\": \"adbnn\",\r\n        \"vetPhone\": \"1234577\",\r\n        \"clinic\": \"Galle\",\r\n        \"userID\": 28\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/vetManage/update/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vetManage",
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "25"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a vet by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/vetManage/findById/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vetManage",
+										"findById",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "25"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a vet by clinic",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/vetManage/findByClinic/:clinic",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vetManage",
+										"findByClinic",
+										":clinic"
+									],
+									"variable": [
+										{
+											"key": "clinic",
+											"value": "Kalutara"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a vet by specialization",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/vetManage/findBySpecialization/:specialization",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vetManage",
+										"findBySpecialization",
+										":specialization"
+									],
+									"variable": [
+										{
+											"key": "specialization",
+											"value": "Dermatologist"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all vets",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/vetManage/findAll",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vetManage",
+										"findAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a vet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/vetManage/delete/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vetManage",
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "25"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Daycare Manage",
+					"item": [
+						{
+							"name": "Add a daycare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"dcID\":28,\r\n        \"userID\": 29, \r\n        \"dcName\": \"Daycare1\",\r\n        \"dcLocation\": \"DaycareLocation1\",\r\n        \"dcPhone\": \"123456\",\r\n        \"dcEmail\": \"daycare1@gmail.com\",\r\n        \"openDays\":\"Everyday\" ,\r\n        \"openTimes\": \"7am-7pm\",\r\n        \"noOfStaffMembers\": 20,\r\n        \"amenitiesOffered\": \"mnbvfdsre\",\r\n        \"safetyFeatures\": \"wdgldheru\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/daycareManage/add",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycareManage",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a daycare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n      \r\n        \"userID\": 29, \r\n        \"dcName\": \"Daycare1\",\r\n        \"dcLocation\": \"daycareLocation1\",\r\n        \"dcPhone\": \"123456\",\r\n        \"dcEmail\": \"daycare1@gmail.com\",\r\n        \"openDays\":\"Everyday\" ,\r\n        \"openTimes\": \"7am-7pm\",\r\n        \"noOfStaffMembers\": 20,\r\n        \"amenitiesOffered\": \"mnbvfdsre\",\r\n        \"safetyFeatures\": \"wdgldheru\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/daycareManage/update/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycareManage",
+										"update",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "28"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a daycare by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/daycareManage/findById/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycareManage",
+										"findById",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "28"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a daycare by location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/daycareManage/findByLocation/:location",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycareManage",
+										"findByLocation",
+										":location"
+									],
+									"variable": [
+										{
+											"key": "location",
+											"value": "Colombo"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a daycare by userID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/daycareManage/findByUserID/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycareManage",
+										"findByUserID",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "27"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all daycares",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/daycareManage/findAll",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycareManage",
+										"findAll"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a daycare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/daycareManage/delete/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycareManage",
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "28"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Contains APIs designed for admin-level control over all users and entities in the system. The admin can:\n\nView, update, and delete user records for Adopters, Distributors, Veterinarians, Pets, and Daycares.\n\nSearch for specific records using filters.\n\nThese endpoints simulate real-world admin dashboards and allow testing of centralized user and entity management. Admin actions are typically restricted and require valid authentication tokens."
+		},
+		{
+			"name": "Daycare Panel",
+			"item": [
+				{
+					"name": "Manage Profile",
+					"item": [
+						{
+							"name": "Daycare Registration",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\": {{userID}},\r\n    \"dcName\": \"testuser30\",\r\n    \"dcLocation\":\"Location30\" ,\r\n    \"dcPhone\": \"7412589630\",\r\n    \"dcEmail\": \"testuser30@gmail.com\",\r\n    \"openDays\": \"Weekdays\",\r\n    \"openTimes\": \"9am-5pm\",\r\n    \"noOfStaffMembers\":\"50\" ,\r\n    \"amenitiesOffered\": \"ABCDS\",\r\n    \"safetyFeatures\": \"AERGTHJ\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/daycare/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycare",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Daycare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dcName\": \"testuser18\",\r\n    \"dcLocation\":\"Location25\" ,\r\n    \"dcPhone\": \"7412589630\",\r\n    \"dcEmail\": \"testuser18@gmail.com\",\r\n    \"openDays\": \"Weekdays\",\r\n    \"openTimes\": \"9am-5pm\",\r\n    \"noOfStaffMembers\":\"50\" ,\r\n    \"amenitiesOffered\": \"ABCDS\",\r\n    \"safetyFeatures\": \"AERGTHJ\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/daycare/update/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycare",
+										"update",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Daycare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dcEmail\": \"testuser18@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/daycare/delete/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycare",
+										"delete",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Booking Request Manage",
+					"item": [
+						{
+							"name": "View Bookings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"try {",
+											"    const res = pm.response.json();",
+											"    pm.test(\"Response is a valid JSON object\", function () {",
+											"        pm.expect(res).to.be.an(\"object\");",
+											"    });",
+											"} catch (e) {",
+											"    pm.test(\"Response is not a valid JSON\", function () {",
+											"        pm.expect.fail(\"Response is not JSON\");",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8800/api/daycare/findBookings/29",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8800",
+									"path": [
+										"api",
+										"daycare",
+										"findBookings",
+										"29"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Approve Bookings",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookingID\":22\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/daycare/approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycare",
+										"approve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reject Bookings",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookingID\":22\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/daycare/reject",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"daycare",
+										"reject"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Handles APIs related to daycare management. This includes:\n\nCreating and updating daycare profiles.\n\nTracking and managing daycare booking requests made by users.\n\nApproving or rejecting daycare bookings, with appropriate status updates.\n\nThese APIs reflect real operations in pet care services and test multi-user interactions between daycare managers and pet owners."
+		},
+		{
+			"name": "Distributor Panel",
+			"item": [
+				{
+					"name": "Manage Profile",
+					"item": [
+						{
+							"name": "Distributor Registration",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"disName\":\"Testuser14\" ,\r\n    \"disEmail\":\"testuser14@gmail.com\" ,\r\n    \"disPhone\": \"123456789\",\r\n    \"disLocation\":\"Location14\",\r\n    \"userID\":{{userID}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/distributor/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Distributor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"disName\":\"Testuser14\" ,\r\n    \"disEmail\":\"testuser14@gmail.com\" ,\r\n    \"disPhone\": \"12345\",\r\n    \"disLocation\":\"Location14\" \r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/distributor/update/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"update",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Distributor",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \r\n    \"email\": \"testuser10@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/distributor/delete/:userID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"delete",
+										":userID"
+									],
+									"variable": [
+										{
+											"key": "userID",
+											"value": "16"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pet Management",
+					"item": [
+						{
+							"name": "Pet Registration",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\": {{userID}},\r\n    \"petName\": \"Buddy4\",\r\n    \"petBreed\":\"Labrador\" ,\r\n    \"petAge\": \"2.5\",\r\n    \"petSkinColor\": \"Brown\",\r\n    \"petGender\": \"Male\",\r\n    \"petHeight\": \"22\",\r\n    \"petWeight\": \"6\",\r\n    \"petImage\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Pet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\": {{userID}},\r\n    \"petName\": \"Buddy4\",\r\n    \"petBreed\":\"Labrador\" ,\r\n    \"petAge\": \"2.5\",\r\n    \"petSkinColor\": \"Brown\",\r\n    \"petGender\": \"Male\",\r\n    \"petHeight\": \"22\",\r\n    \"petWeight\": \"6\",\r\n    \"petImage\": null,\r\n    \"status\":\"Available\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet/update/:petID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet",
+										"update",
+										":petID"
+									],
+									"variable": [
+										{
+											"key": "petID",
+											"value": "48"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View My All Pets",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/distributor/myPets/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"myPets",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Pet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"petID\":45,\r\n    \"userID\":{{userID}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/pet/delete",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Track Bookings",
+					"item": [
+						{
+							"name": "Track Vet Appointments",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/distributor/trackAppointmentRequests/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"trackAppointmentRequests",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Track Daycare Bookings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\": \"\",\r\n    \"dcName\": \"\",\r\n    \"dcLocation\":\"\" ,\r\n    \"dcPhone\": \"\",\r\n    \"dcEmail\": \"\",\r\n    \"openDays\": \"\",\r\n    \"openTimes\": \"\",\r\n    \"noOfStaffMembers\":\"\" ,\r\n    \"amenitiesOffered\": \"\",\r\n    \"safetyFeatures\": \"\"\r\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/distributor/trackBookingRequests/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"trackBookingRequests",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Vet Appointment Tracking Details",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/distributor/appointmentRequestDetails/:appointmentID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"appointmentRequestDetails",
+										":appointmentID"
+									],
+									"variable": [
+										{
+											"key": "appointmentID",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Daycare Book Tracking Details",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/distributor/bookingRequestDetails/:bookingID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"bookingRequestDetails",
+										":bookingID"
+									],
+									"variable": [
+										{
+											"key": "bookingID",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Adoption Requests Manage",
+					"item": [
+						{
+							"name": "Approve Adoption Requests",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"try {",
+											"    const res = pm.response.json();",
+											"    pm.test(\"Response is a valid JSON object\", function () {",
+											"        pm.expect(res).to.be.an(\"object\");",
+											"    });",
+											"} catch (e) {",
+											"    pm.test(\"Response is not a valid JSON\", function () {",
+											"        pm.expect.fail(\"Response is not JSON\");",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"petID\": 48\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/distributor/approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"approve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reject Adoption Requests",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"try {",
+											"    const res = pm.response.json();",
+											"    pm.test(\"Response is a valid JSON object\", function () {",
+											"        pm.expect(res).to.be.an(\"object\");",
+											"    });",
+											"} catch (e) {",
+											"    pm.test(\"Response is not a valid JSON\", function () {",
+											"        pm.expect.fail(\"Response is not JSON\");",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"petID\": 48\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/distributor/reject",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"distributor",
+										"reject"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All My Requests",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"try {",
+											"    const res = pm.response.json();",
+											"    pm.test(\"Response is a valid JSON object\", function () {",
+											"        pm.expect(res).to.be.an(\"object\");",
+											"    });",
+											"} catch (e) {",
+											"    pm.test(\"Response is not a valid JSON\", function () {",
+											"        pm.expect.fail(\"Response is not JSON\");",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/pet/adoptionRequest/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"pet",
+										"adoptionRequest",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Manages all functionality available to distributors. Includes:\n\nDistributor profile management (create, update, delete).\n\nPet management (register, update, delete, and search for pets).\n\nTracking and responding to adoption requests.\n\nViewing vet appointments and daycare bookings.\n\nThese APIs test how distributors interact with adopters, veterinarians, and daycare services — simulating the full distributor workflow."
+		},
+		{
+			"name": "Adopter Panel",
+			"item": [
+				{
+					"name": "Manage Profile",
+					"item": [
+						{
+							"name": "Adopter Regitration",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\":{{userID}},\r\n    \"adoName\":\"testuser32\" ,\r\n    \"adoNIC\":\"123456V\",\r\n    \"adoAge\": \"25\",\r\n    \"adoGender\": \"Male\",\r\n    \"adoJob\": \"ABC\",\r\n    \"adoLocation\": \"Location32\",\r\n    \"adoEmail\": \"testuser32@gmail.com\",\r\n    \"adoPhone\": \"1478952\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/adopter/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"adopter",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Adopter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\": {{userID}},\r\n    \"adoName\":\"Testuser17\" ,\r\n    \"adoNIC\":\"123456V\",\r\n    \"adoAge\": \"28\",\r\n    \"adoGender\": \"Male\",\r\n    \"adoJob\": \"DEk\",\r\n    \"adoLocation\": \"Location17\",\r\n    \"adoEmail\": \"testuser17@gmail.com\",\r\n    \"adoPhone\": \"1478952345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/adopter/update/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"adopter",
+										"update",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Adopter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n      \"adoEmail\": \"testuser17@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/adopter/delete/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"adopter",
+										"delete",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "View All Pets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"try {\r",
+									"    const res = pm.response.json();\r",
+									"    pm.test(\"Response is a valid JSON object\", function () {\r",
+									"        pm.expect(res).to.be.an(\"object\");\r",
+									"    });\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is not a valid JSON\", function () {\r",
+									"        pm.expect.fail(\"Response is not JSON\");\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pet/allpets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pet",
+								"allpets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Track Adoption Requests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"try {\r",
+									"    const res = pm.response.json();\r",
+									"    pm.test(\"Response is a valid JSON object\", function () {\r",
+									"        pm.expect(res).to.be.an(\"object\");\r",
+									"    });\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is not a valid JSON\", function () {\r",
+									"        pm.expect.fail(\"Response is not JSON\");\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/adopter/trackRequests/{{userID}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"adopter",
+								"trackRequests",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pet Profile by PetID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"try {\r",
+									"    const res = pm.response.json();\r",
+									"    pm.test(\"Response is a valid JSON object\", function () {\r",
+									"        pm.expect(res).to.be.an(\"object\");\r",
+									"    });\r",
+									"} catch (e) {\r",
+									"    pm.test(\"Response is not a valid JSON\", function () {\r",
+									"        pm.expect.fail(\"Response is not JSON\");\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pet/petProfile/:petID",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pet",
+								"petProfile",
+								":petID"
+							],
+							"variable": [
+								{
+									"key": "petID",
+									"value": "46"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Contains endpoints used by adopters. Allows:\n\nRegistering and managing adopter profiles.\n\nViewing all pets or filtering pets by breed, gender, color, or age.\n\nTracking adoption request status.\n\nThese APIs simulate how users browse, select, and initiate the process of adopting a pet, enabling end-to-end testing of the adopter journey."
+		},
+		{
+			"name": "Vet Panel",
+			"item": [
+				{
+					"name": "Manage Profile",
+					"item": [
+						{
+							"name": "Vet Registration",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\": {{userID}},\r\n    \"vetName\": \"Testuser16\",\r\n    \"vetSpecialization\": \"Dermatologist\",\r\n    \"vetPhone\": \"4567891230\",\r\n    \"vetEmail\": \"testuser16@gmail.com\",\r\n    \"clinic\": \"Kalutara\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/vet/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vet",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Vet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userID\": {{userID}},\r\n    \"vetName\": \"Testuser16\",\r\n    \"vetSpecialization\": \"Dermatologist\",\r\n    \"vetPhone\": \"456789\",\r\n    \"vetEmail\": \"testuser16@gmail.com\",\r\n    \"clinic\": \"Kalutara\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/vet/update/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vet",
+										"update",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete  Vet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"vetEmail\":\"testuser16@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/vet/delete/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vet",
+										"delete",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Healthcard Management",
+					"item": [
+						{
+							"name": "Add a Healthcard",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"vetUserID\": {{userID}},\r\n        \"petID\": 44,\r\n        \"healthIssues\": \"No issues\",\r\n        \"lastCheckupDate\": \"2025-08-06\",\r\n        \"vName\": \"QSD\",\r\n        \"vDate\": \"2025-08-06\",\r\n        \"vDose\": \"1\",\r\n        \"vStatus\":\"Done\" ,\r\n        \"dueDateForNext\": \"2025-08-25\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/healthcard/add",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"healthcard",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Healthcard",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"vetUserID\": {{userID}},\r\n        \"petID\": 44,\r\n        \"healthIssues\": \"AQD\",\r\n        \"lastCheckupDate\": \"2025-08-06\",\r\n        \"vName\": \"QSD\",\r\n        \"vDate\": \"2025-08-06\",\r\n        \"vDose\": \"1\",\r\n        \"vStatus\":\"Done\" ,\r\n        \"dueDateForNext\": \"2025-08-25\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/healthcard/update/:cardID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"healthcard",
+										"update",
+										":cardID"
+									],
+									"variable": [
+										{
+											"key": "cardID",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Healthcard",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/healthcard/delete/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"healthcard",
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "15"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a Healthcard by PetID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/healthcard/getHealthProfile/:petID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"healthcard",
+										"getHealthProfile",
+										":petID"
+									],
+									"variable": [
+										{
+											"key": "petID",
+											"value": "44"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find All Healthcards",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"try {\r",
+											"    const res = pm.response.json();\r",
+											"    pm.test(\"Response is a valid JSON object\", function () {\r",
+											"        pm.expect(res).to.be.an(\"object\");\r",
+											"    });\r",
+											"} catch (e) {\r",
+											"    pm.test(\"Response is not a valid JSON\", function () {\r",
+											"        pm.expect.fail(\"Response is not JSON\");\r",
+											"    });\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/healthcard/findAll",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"healthcard",
+										"findAll"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Appointments Manage",
+					"item": [
+						{
+							"name": "Approve a Appointment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"try {",
+											"    const res = pm.response.json();",
+											"    pm.test(\"Response is a valid JSON object\", function () {",
+											"        pm.expect(res).to.be.an(\"object\");",
+											"    });",
+											"} catch (e) {",
+											"    pm.test(\"Response is not a valid JSON\", function () {",
+											"        pm.expect.fail(\"Response is not JSON\");",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"appointmentID\": 1\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/vet/approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vet",
+										"approve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reject a Appointment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"try {",
+											"    const res = pm.response.json();",
+											"    pm.test(\"Response is a valid JSON object\", function () {",
+											"        pm.expect(res).to.be.an(\"object\");",
+											"    });",
+											"} catch (e) {",
+											"    pm.test(\"Response is not a valid JSON\", function () {",
+											"        pm.expect.fail(\"Response is not JSON\");",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"appointmentID\": 1\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/vet/reject",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vet",
+										"reject"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Appointments",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"try {",
+											"    const res = pm.response.json();",
+											"    pm.test(\"Response is a valid JSON object\", function () {",
+											"        pm.expect(res).to.be.an(\"object\");",
+											"    });",
+											"} catch (e) {",
+											"    pm.test(\"Response is not a valid JSON\", function () {",
+											"        pm.expect.fail(\"Response is not JSON\");",
+											"    });",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/vet/findVetAppointments/{{userID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"vet",
+										"findVetAppointments",
+										"{{userID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Includes veterinarian profile and operations APIs. The vet can:\n\nRegister and manage personal details (clinic, specialization, contact).\n\nView and manage vet appointment requests.\n\nApprove or reject incoming appointments.\n\nHandle health card management and vaccine-related updates for pets.\n\nThese endpoints reflect healthcare operations in a veterinary setting and support scenarios involving health record verification."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8800/api",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
