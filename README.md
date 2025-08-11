@@ -81,10 +81,10 @@ In addition to the API tests, detailed test cases for key features such as the *
   `Login Page Test Cases.xlsx`
 
 This file contains step-by-step test scenarios to help ensure the login functionality works as expected, including:
-  -Login with valid credentials
-  -Login with invalid password 
-  -Login with invalid userID
-  -Login with empty fields
+  - Login with valid credentials
+  - Login with invalid password 
+  - Login with invalid userID
+  - Login with empty fields
 
 ---
 
