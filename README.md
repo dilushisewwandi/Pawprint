@@ -8,11 +8,9 @@ An Automated Web Platform for Pet Adoption and Petcare
 - [Description](#description)
 - [Key Features (Role-Based Panels)](#key-features-role-based-panels)
 - [Postman Collection & API Testing](#postman-collection--api-testing)
+- [Test Cases Documentation](#Test-Cases-Documentation)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
-- [Usage](#usage-overview)
-- [Future Enhancements](#future-enhancements)
-- [Contact](#contact)
 
 ---
 
@@ -72,6 +70,17 @@ Comprehensive API testing was done using **Postman**, with complete coverage of 
 ### Collection Location
 - Postman collection is available in:  
   `postman-tests/Pawprint_API_Test_Collection.json`
+
+---
+
+## Test Cases Documentation
+
+In addition to the API tests, detailed test cases for key features such as the **Login Page** are provided in the repository.
+
+- The login test cases can be found in the file:  
+  `Login Page Test Cases.xlsx`
+
+This file contains step-by-step test scenarios to help ensure the login functionality works as expected.
 
 ---
 
